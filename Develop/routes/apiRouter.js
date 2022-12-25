@@ -1,36 +1,45 @@
 const router = require("express").Router();
 const fs = require("fs");
-const util = require("util");
+const uniqid = require("uniqid");
 
-
-const readFileAsync = util.promisify(fs.readFile);
-const writeFileAsync = util.promisify(fs.writeFile);
 
 // Get-request
 router.get("/notes", (req, res) => {
-  readFileAsync("./db/db.json", "utf8").then((data) => {
-    const notes = [].concat(JSON.parse(data));
-    res.json(notes);
-  });
-});
+  fs.readFile('./db/db.json', 'utf8',(err, data) => {
+    if (err) {
+      res.status(500)
+    } else {
+      const notes = [].concat(JSON.parse(data));
+      res.json(notes);
+    
+    }
+  })
+})
 
-//post-request
+
+
+
 router.post("/notes", (req, res) => {
   const newNote = req.body;
-  readFileAsync("./db/db.json", "utf8")
-    .then((data) => {
+  fs.readFile('./db/db.json', 'utf8',(err, data) => {
+    if (err) {
+      res.status(500)
+    } else {
       const notes = [].concat(JSON.parse(data));
-      newNote.id = notes.length + 1;
+      newNote.id = uniqid();
       notes.push(newNote);
-      return notes;
+      fs.writeFile('./db/db.json', JSON.stringify(notes, null, 4) , (err) => {
+        err ? console.log(err) : res.send(newNote)
+      });
+    }
+    
+
     })
-    .then((notes) => {
-      writeFileAsync("./db/db.json", JSON.stringify(notes));
-      res.json(newNote);
-    });
-});
+  })
+ 
 
-
+  
+   
 
 
 
