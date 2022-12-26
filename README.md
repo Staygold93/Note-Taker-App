@@ -3,7 +3,8 @@
 
 
 # Deployed Link 
-* https://notes-challenge-assignment.herokuapp.com/notes
+
+* https://notes-challenge-assignment.herokuapp.com/
 
 
 # Installation 
