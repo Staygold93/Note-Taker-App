@@ -13,7 +13,7 @@
 # Description
 * This is an application that uses the Express.js framework to create a server-side API. This application uses GET and POST requests to view and submit information to the server when the various endpoints are visited. This application allows a user to write notes, view submitted notes, and delete notes.
 
-#Developer
+# Developer
 * Aldo Perez
 * perezaldo99@gmaill.com
 
