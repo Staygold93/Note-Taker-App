@@ -18,7 +18,7 @@ router.get("/notes", (req, res) => {
 
 
 
-
+// Post-Request
 router.post("/notes", (req, res) => {
   const newNote = req.body;
   fs.readFile('./db/db.json', 'utf8',(err, data) => {
@@ -33,9 +33,21 @@ router.post("/notes", (req, res) => {
       });
     }
     
-
+   
     })
   })
+
+// Delete-Note-Object
+  router.delete('/notes/:id', (req, res) => {
+    
+    let db = JSON.parse(fs.readFileSync('db/db.json'))
+   
+    let deleteNotes = db.filter(item => item.id !== req.params.id);
+  
+    fs.writeFileSync('db/db.json', JSON.stringify(deleteNotes));
+    res.json(deleteNotes);
+    
+  });
  
 
   
